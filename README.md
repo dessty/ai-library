@@ -6,15 +6,20 @@ live here once; each AI tool gets its own copy through Bifrost.
 ```
 .
 ├── config.toml
-├── skills/     # folders with SKILL.md
-├── rules/      # markdown
-└── agents/     # Heimdall, and later other agents
+├── skills/<name>/SKILL.md
+├── rules/                 # markdown
+└── agents/<name>/Heimdall.md   # one folder per agent
 ```
 
-Heimdall is first in. Cursor reads `agents/heimdall.md` (point
-`~/.cursor/agents/heimdall.md` at it). Bifrost currently deploys YAML agents
-to Claude only — this markdown file is the source of truth until that adapter
-exists.
+Heimdall is first in. See [`agents/heimdall/README.md`](agents/heimdall/README.md).
+The prompt is `agents/heimdall/Heimdall.md`. Point Cursor at it:
+
+```bash
+ln -sf /path/to/my-skills-library/agents/heimdall/Heimdall.md ~/.cursor/agents/heimdall.md
+```
+
+Bifrost currently deploys top-level YAML agents to Claude only. These
+markdown folders are the source of truth until that adapter exists.
 
 ```bash
 bifrost init --repo https://github.com/dessty/my-skills-library.git

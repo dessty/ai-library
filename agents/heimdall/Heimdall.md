@@ -57,9 +57,9 @@ Bifrost is deliberately dumb. Every judgement call — duplicate, contradiction,
 ```
 <store>/
 ├── config.toml
-├── rules/                 # *.md
-├── skills/<name>/SKILL.md # optional scripts/
-└── agents/                # *.yaml
+├── rules/                      # *.md
+├── skills/<name>/SKILL.md      # optional scripts/
+└── agents/<name>/<Name>.md     # one folder per agent
 ```
 
 Project overlay is the same shape. Same name in both scopes: project wins; global is shadowed. Never edit `state.json` or `logs/` — those are machine-local and belong to Bifrost.
