@@ -1,0 +1,69 @@
+[general]
+
+# Which AI tools Bifrost should deploy to.
+# Remove one from this list to stop Bifrost touching it entirely.
+tools = ["claude", "cursor", "codex"]
+
+
+[interface]
+
+# How Heimdall (or any agent) should call Bifrost.
+#
+# "cli" = agent runs terminal commands and reads --json output
+# "mcp" = agent connects to `bifrost serve` instead
+#
+# "cli" is the default and always works. "mcp" requires the server
+# to be running; agents should fall back to "cli" if it is not.
+mode = "cli"
+
+
+[git]
+
+# Should Bifrost automatically commit and push skill changes to the
+# remote skills repo?
+#
+# true  = every change is committed and pushed right away
+# false = you commit and push manually, when you want
+auto_push = true
+
+
+[scripts]
+
+# Should Bifrost stop and wait for you to approve a script before
+# letting it run?
+#
+# true  = a new or changed script is NOT made executable until you
+#         approve it (via `bifrost validate`)
+# false = Bifrost trusts every script immediately, no check needed
+require_script_approval = true
+
+# Only matters if the setting above is true. Decides WHICH scripts
+# need your approval.
+#
+# "all"     = check every script, wherever it came from
+# "project" = only check scripts in project skills; skip global ones,
+#             since those are usually written by you
+# "none"    = never check, same as turning the setting above off
+approval_scope = "all"
+
+
+[logging]
+
+# Should Bifrost save error messages to a file, not just print them
+# to the terminal?
+#
+# true  = errors are written to BIFROST_HOME/logs/, one file per day
+# false = errors only appear in the terminal and are not saved
+log_errors = true
+
+
+[display]
+
+# Should Bifrost use rainbow colours on the bridge graphics?
+#
+# true  = bridge arrows and the loading bar shade across the rainbow
+# false = plain single-colour output
+#
+# This only affects the rainbow. All colour is stripped automatically
+# when output is piped to a file or used with --json.
+rainbow_bridge = true
