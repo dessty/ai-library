@@ -3,7 +3,7 @@ name: sdlc-plan
 description: Guide the user from a prompt, an existing repo, or an idea to a shared understanding of the work, then to tickets. Defines unknown terms, validates simple requirements with should / should not scenarios, models the system (class, data, services, flows) in Mermaid or Excalidraw, breaks the work down with a WBS, tests the riskiest assumption with a spike, and writes small tickets (GitHub issues or .work/tickets.md). Use at the start of any feature, project, assignment or assessment, after a spike or slice finishes, or when the user asks for a plan or tickets.
 ---
 
-Version: 5.1.0
+Version: 5.3.0
 
 # Plan work
 
@@ -82,10 +82,17 @@ Make sure the user knows every word the plan will use.
 ```md
 # Glossary
 
+**ADK** (Agent Development Kit): Google's framework for building AI agents. In this project: runs the drill agent.
+
 **SSE** (Server-Sent Events): A way for a server to push a stream of messages to a browser over one HTTP connection. In this project: the agent streams its answer token by token.
+
+Known terms: Vitest (test runner). Zod (runtime schema validation).
 ```
 
-New terms that appear in later steps are added the same way, as they appear.
+- Sort entries alphabetically by term, ignoring case (`LCSW`, `Log redaction`, `LPC`).
+- Keep the `Known terms:` line last, also sorted.
+
+New terms that appear in later steps are inserted at their alphabetical place, never appended at the end.
 
 ## 3. Scope
 
@@ -182,8 +189,15 @@ Add to `.work/BRIEF.md`:
 │   └── 1.1.2 <work package> (M)
 └── 1.2 <capability>                      R3
     └── 1.2.1 <work package> (S)
+
+| WBS | After | Files |
+|---|---|---|
+| 1.1.1 | S0 | src/db/*, src/providers/* |
+| 1.1.2 | 1.1.1 | src/providers/* |
+| 1.2.1 | S0 | src/eligibility/* |
 ```
 
+- `After` lists the packages that must be done first. `Files` lists the folders or files the package will touch. Two packages can be built in parallel only when neither is after the other and their `Files` do not overlap.
 - Level 2 is a capability the user or the app gets ("Check eligibility"), never a layer ("Database", "API"). Layers produce horizontal tickets that cannot be tested end to end.
 - Level 3 is a vertical slice of size XS, S or M. Split anything larger.
 - The children of a node cover all of its scope, and nothing outside it.
@@ -250,6 +264,8 @@ Detailed ticket format:
 - Tests: <one per scenario, plus edge cases>
 - Model: <the part of .work/MODEL.md this ticket builds or changes>
 - Size: XS / S / M
+- After: <WBS ids, or none>
+- Files: <folders or files it touches>
 - Agent does: <what the agent implements>
 - I check: <what I review by hand, and why>
 ```
@@ -265,6 +281,17 @@ Rules:
 
 - Derive values that can go stale (status, eligibility) instead of storing them, unless a ticket says why.
 - If a slice has an LLM or agent feature, list its behaviors under `AI evals` in the ticket for `sdlc-evals`. Each "should not" scenario is a candidate refusal case.
+
+## Cursor plan mode
+
+When this skill runs in Cursor plan mode, also write the Cursor plan. The `.work/` files stay the source of truth, because other tools cannot read a Cursor plan.
+
+- Start the plan body with: "Build with the `sdlc-build` skill, orchestrator mode."
+- Body: the project summary, the requirements (id and one line each), the WBS tree and table, the detailed tickets, and links to the `.work/` files.
+- Todos: one per spike and per level 3 work package, in WBS order. The todo id is the WBS id (`s0`, `1.1.1`). Content: `[feat] 1.1.1 <title> - R1, R2 - S - after s0`.
+- If plan mode cannot write the `.work/` files, put their full content in the plan body, and make the first todo `0 Write the .work/ files from this plan and commit them`.
+- The `.work/` files and the base code must be committed before the build starts. Build agents work in git worktrees, and a worktree starts from the last commit.
+- The user picks the models: the plan model in the chat picker, the build model in the picker next to Build.
 
 ## Stop
 

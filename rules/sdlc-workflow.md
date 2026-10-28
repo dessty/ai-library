@@ -50,6 +50,12 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 7) ──> sdlc-build ─�
 6. "sdlc-build #N" for each ticket. Review every diff before it is committed.
 7. AI feature? "sdlc-evals" after each change to the prompt, model or tools.
 
+## In Cursor: plan mode and parallel build
+
+1. Plan mode (Opus): run `sdlc-plan`. The Cursor plan's todos are the spike and the WBS work packages. The todo id is the WBS id.
+2. Commit the `.work/` files.
+3. Build (Opus in the Build picker): `sdlc-build` in orchestrator mode. Independent tickets go to parallel subagents in git worktrees: Grok 4.7 for XS and S, Sonnet 5.5 for M. I review each diff before it is merged.
+
 ## Terms
 
 - Spike: a small, time-limited task that answers one question. The output is an answer, not a feature.

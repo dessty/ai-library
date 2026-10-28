@@ -13,3 +13,5 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 3.0.0 - short planning cycles: intake by input type, spike first, tickets (GitHub issues or .work/tickets.md)
 - 4.0.0 - renamed with the sdlc- prefix
 - 4.1.0 - one test per ticket scenario, keep `.work/MODEL.md` and the glossary in sync, re-plan from `sdlc-plan` step 7
+- 4.2.0 - new glossary terms inserted alphabetically
+- 5.0.0 - orchestrator mode: parallel subagents in git worktrees, model by ticket size, cherry-pick after review

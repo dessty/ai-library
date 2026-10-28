@@ -17,3 +17,5 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 4.0.0 - renamed with the sdlc- prefix
 - 5.0.0 - guided rounds of at most 3 questions, Terms step with `.work/GLOSSARY.md`, requirements with should / should not scenarios, Model step (`.work/MODEL.md`, Mermaid, optional Excalidraw), WBS, no timed mode, no `grill-with-docs` call
 - 5.1.0 - project summary (goal, context, what gets built, constraints, unclear) shown before any question
+- 5.2.0 - `.work/GLOSSARY.md` sorted alphabetically; new terms inserted in place
+- 5.3.0 - Cursor plan mode output (todo id = WBS id); `After` and `Files` per work package for parallel builds
