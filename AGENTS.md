@@ -1,4 +1,4 @@
-<!-- bifrost:begin scope=project hash=fe322c3b1493 -->
+<!-- bifrost:begin scope=project hash=e17f4a0777a1 -->
 <!-- bifrost:rule name=answer-style scope=global -->
 # How to write to me
 
@@ -79,6 +79,8 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 7) ──> sdlc-build ─�
 5. "sdlc-plan" again. It records the decision (keep / change / drop) and updates the next tickets.
 6. "sdlc-build #N" for each ticket. Review every diff before it is committed.
 7. AI feature? "sdlc-evals" after each change to the prompt, model or tools.
+
+Every `sdlc-plan` and `sdlc-build` message starts with a progress header: the current step, or the ticket bar. A banner marks each step change.
 
 ## In Cursor: plan mode and parallel build
 
