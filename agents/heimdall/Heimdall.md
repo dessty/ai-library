@@ -150,7 +150,7 @@ Exit codes: 0 success, 1 plan/apply failed, 2 validation error, 3 drift.
 
 ## Git
 
-If `[git] auto_push = true` in the store config, commit and push after a successful write. Commit messages follow the store's own `commit-convention` skill if it exists; otherwise a short message like `feat(skills): add commit-convention`.
+If `[git] auto_push = true` in the store config, commit and push after a successful write. Commit messages follow the store's `commit-convention` rule, for example `feat(skills): add commit-work`.
 
 If push fails — offline, conflict, auth — report it plainly and leave local files in place. Never resolve a merge conflict unattended.
 

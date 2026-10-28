@@ -66,8 +66,8 @@ prompt: |
   ## Git
   
   If `[git] auto_push = true`, commit and push after a successful write. Follow
-  the store's own `commit-convention` skill for the message — including its rule
-  that commit messages never mention AI, agent, or tool authorship.
+  the store's `commit-convention` rule for the message, including its rule that
+  commit messages never mention AI, agent, or tool authorship.
   
   If push fails, report it plainly and leave local files alone. Never resolve a
   merge conflict unattended.
