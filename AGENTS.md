@@ -1,4 +1,4 @@
-<!-- bifrost:begin scope=project hash=4f1afc2779eb -->
+<!-- bifrost:begin scope=project hash=35f4b53aa62f -->
 <!-- bifrost:rule name=answer-style scope=global -->
 # How to write to me
 
@@ -53,9 +53,10 @@ Apply to any task bigger than a one-line fix.
 ## The flow
 
 ```
-sdlc-plan ──> sdlc-build ──> sdlc-plan (step 5) ──> sdlc-build ──> ... ──> sdlc-evals
- brief         spike          validate              next ticket            AI features only
- grill         first          update tickets
+sdlc-plan ──> sdlc-build ──> sdlc-plan (step 7) ──> sdlc-build ──> ... ──> sdlc-evals
+ terms         spike          validate              next ticket            AI features only
+ scope         first          update tickets
+ model, WBS
  tickets
 ```
 
@@ -63,8 +64,8 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 5) ──> sdlc-build ─�
 
 | Piece | When | Output |
 |---|---|---|
-| `sdlc-plan` | Start of any work, and after each spike or slice | `.work/BRIEF.md`, tickets |
-| `grill-with-docs` | Called by `sdlc-plan` | `CONTEXT.md` (glossary), `docs/adr/` (decisions) |
+| `sdlc-plan` | Start of any work, and after each spike or slice | `.work/BRIEF.md`, `.work/GLOSSARY.md`, `.work/MODEL.md`, tickets |
+| `domain-modeling` | Called by `sdlc-plan` | `CONTEXT.md` (domain glossary), `docs/adr/` (decisions) |
 | `sdlc-build` | One ticket at a time | tests, code, one commit per ticket, `.work/build-log.md` |
 | `commit-work` | Called by `sdlc-build` | clean commits |
 | `sdlc-evals` | Only when the work has an LLM or agent feature | scorecard, `.work/receipts.jsonl` |
@@ -72,8 +73,8 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 5) ──> sdlc-build ─�
 ## How to use it
 
 1. Start: "sdlc-plan" plus a prompt, a repo, or an idea.
-2. Answer the grill questions until we agree on the scope.
-3. Review the spike ticket and the first tickets. Say "approved".
+2. Answer the rounds of questions (at most 3 at a time): terms I don't know, requirements, decisions.
+3. Review the diagrams, the WBS, the spike ticket and the first tickets. Say "approved".
 4. "sdlc-build" the spike. Read the answer.
 5. "sdlc-plan" again. It records the decision (keep / change / drop) and updates the next tickets.
 6. "sdlc-build #N" for each ticket. Review every diff before it is committed.
@@ -83,7 +84,9 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 5) ──> sdlc-build ─�
 
 - Spike: a small, time-limited task that answers one question. The output is an answer, not a feature.
 - Vertical slice: a small change that works end to end and can be tested.
-- Ticket: a GitHub issue, or an entry in `.work/tickets.md` when there is no GitHub access or the round is timed.
+- Ticket: a GitHub issue, or an entry in `.work/tickets.md` when there is no GitHub access.
+- Scenario: one concrete "should" or "should not" example of a requirement. Each scenario becomes a test.
+- WBS (work breakdown structure): a tree that splits the project into capabilities, then into work packages. Each work package is one ticket.
 - Eval: a fixed input with an expected AI behavior (answer, tool call, refusal). Unit tests check code. Evals check model behavior.
 - Receipt: one JSON line per eval run: commit, model, prompt version, score, failed cases.
 
@@ -91,7 +94,9 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 5) ──> sdlc-build ─�
 
 ```
 .work/
-├── BRIEF.md         problem, requirements, risks, validation decisions
+├── BRIEF.md         problem, constraints, requirements, WBS, risks, validation decisions
+├── GLOSSARY.md      technical and industry terms, acronyms
+├── MODEL.md         class, data, service and flow diagrams (Mermaid)
 ├── tickets.md       only when not using GitHub issues
 ├── build-log.md     mistakes the agent made and how I caught them
 ├── evals.md         AI eval cases
@@ -99,12 +104,6 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 5) ──> sdlc-build ─�
 CONTEXT.md           domain glossary
 docs/adr/            hard-to-reverse decisions
 ```
-
-## Timed mode (interviews, live exercises)
-
-- 30 min prep: intake and brief 5, grill 10, risks and spike ticket 5, tickets 5. Rest: start the spike.
-- Tickets go in `.work/tickets.md`.
-- Narrate: what I delegate, what I check, where the agent was wrong (`build-log.md`).
 
 ## Improving the system
 

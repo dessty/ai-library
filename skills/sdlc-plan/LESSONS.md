@@ -6,9 +6,13 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 
 ## Lessons
 
+- mock1-credentialing: 6 design questions in one plain-text message. The user answered "ok" to all of them, so the answers were accepted, not understood. Four assumptions appeared after the grill. Prevent with: at most 3 independent questions per round, through the interactive question tool, and assumptions asked before the brief is final.
+- mock1-credentialing: the brief used terms and acronyms (NPI, DEA, LCSW, compact) without checking that the user knew them. Prevent with: a Terms step before Scope, and a glossary.
+
 ## Changelog
 
 - 1.0.0 - first version
 - 2.0.0 - simplified to a 3-skill workflow
 - 3.0.0 - short planning cycles: intake by input type, spike first, tickets (GitHub issues or .work/tickets.md)
 - 4.0.0 - renamed with the sdlc- prefix
+- 5.0.0 - guided rounds of at most 3 questions, Terms step with `.work/GLOSSARY.md`, requirements with should / should not scenarios, Model step (`.work/MODEL.md`, Mermaid, optional Excalidraw), WBS, no timed mode, no `grill-with-docs` call

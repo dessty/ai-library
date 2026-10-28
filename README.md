@@ -24,7 +24,7 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 
 | Kind | Name | Use |
 |---|---|---|
-| Skill | `sdlc-plan` | Prompt, repo or idea -> brief, grill, spike, tickets; plans in short cycles |
+| Skill | `sdlc-plan` | Prompt, repo or idea -> terms, scenarios, models, WBS, spike, tickets; guided rounds |
 | Skill | `sdlc-build` | One ticket: test first, implement, review, commit, close, log mistakes |
 | Skill | `sdlc-evals` | Evaluate an LLM or agent feature and save a receipt |
 | Skill | `commit-work` | Review, split and write clean commits |
@@ -41,8 +41,8 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 
 ## Development workflow
 
-`sdlc-plan` (calls `grill-with-docs`) -> `sdlc-build` (spike first, then one ticket at a time) -> `sdlc-plan` again after each spike or slice -> `sdlc-evals` (only for AI features).
-Tickets are GitHub issues, or `.work/tickets.md` in timed rounds. Working files go in `.work/` in the project repo.
+`sdlc-plan` (terms, scope, model, WBS, tickets; calls `domain-modeling`) -> `sdlc-build` (spike first, then one ticket at a time) -> `sdlc-plan` again after each spike or slice -> `sdlc-evals` (only for AI features).
+Tickets are GitHub issues, or `.work/tickets.md` when there is no GitHub access. Working files go in `.work/` in the project repo.
 
 ## Improving skills
 

@@ -11,3 +11,4 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 1.0.0 - first version
 - 2.0.0 - simplified to a 3-skill workflow
 - 3.0.0 - renamed with the sdlc- prefix
+- 3.1.0 - refusal cases from "should not" scenarios

@@ -3,7 +3,7 @@ name: sdlc-evals
 description: Evaluate an LLM or agent feature against a fixed set of cases, print a scorecard, and save a receipt. Checks answers, tool calls, refusals and data leaks. Use when the user asks to run evals, test an AI feature, or check whether a prompt or model change helped. Not for normal unit tests.
 ---
 
-Version: 3.0.0
+Version: 3.1.0
 
 # Run evals
 
@@ -11,7 +11,7 @@ An eval is a fixed input with an expected behavior, run against the AI feature. 
 
 ## 1. Cases
 
-Read or create `.work/evals.md`. Start from the `AI evals` lists in the tickets.
+Read or create `.work/evals.md`. Start from the `AI evals` lists in the tickets. Turn each "should not" scenario of an AI feature into a refusal case.
 
 ```md
 | ID | Input | Expect | Grader |

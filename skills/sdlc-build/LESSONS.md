@@ -12,3 +12,4 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 2.0.0 - simplified to a 3-skill workflow
 - 3.0.0 - short planning cycles: intake by input type, spike first, tickets (GitHub issues or .work/tickets.md)
 - 4.0.0 - renamed with the sdlc- prefix
+- 4.1.0 - one test per ticket scenario, keep `.work/MODEL.md` and the glossary in sync, re-plan from `sdlc-plan` step 7
