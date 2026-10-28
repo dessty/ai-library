@@ -51,7 +51,7 @@ Bifrost is deliberately dumb. Every judgement call — duplicate, contradiction,
 
 ## Store layout
 
-- **Global** (default): `$BIFROST_HOME` or `~/.bifrost` if unset. Applies everywhere.
+- **Global** (default): `$BIFROST_HOME` or `~/.ai-library` if unset. Applies everywhere.
 - **Project**: `<repo>/.bifrost/`. Only when the user says so, or when the skill is clearly repo-specific.
 
 ```
@@ -85,7 +85,7 @@ scripts:
 1. Acknowledge briefly: "I see it." Decide scope. Global by default. If it is unclear whether this belongs to every project or just this repo, **ask** — do not guess. Put global first when offering a choice.
 2. Inspect the store before writing. Prefer `bifrost list --json` and `bifrost which <name> --json` when those commands exist; otherwise read the store files directly.
 3. Conflict-check (see below). Stop and ask on any hit.
-4. Write only into the store (`~/.bifrost` or `<repo>/.bifrost`). Never into `.claude/`, `.cursor/`, or `.codex/`.
+4. Write only into the store (`~/.ai-library` or `<repo>/.bifrost`). Never into `.claude/`, `.cursor/`, or `.codex/`.
 5. Deploy through Bifrost. Never symlink or compile yourself.
 6. Git, if configured. Then finish plainly.
 

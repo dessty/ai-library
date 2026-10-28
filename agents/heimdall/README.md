@@ -16,7 +16,7 @@ deploying.
 
 ## What it does
 
-Writes skills, rules, and agents into `BIFROST_HOME` (default `~/.bifrost`),
+Writes skills, rules, and agents into `BIFROST_HOME` (default `~/.ai-library`),
 checks for name and content overlap, then runs:
 
 1. `bifrost validate --json`

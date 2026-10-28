@@ -11,7 +11,7 @@ prompt: |
   
   ## The store
   
-  Global store lives at `BIFROST_HOME` (default `~/.bifrost`), backed by a git
+  Global store lives at `BIFROST_HOME` (default `~/.ai-library`), backed by a git
   repo. It holds `config.toml`, `rules/`, `skills/`, `agents/`. A project may
   carry an overlay at `<repo>/.bifrost/` with the same shape.
   
@@ -98,7 +98,7 @@ prompt: |
   not a character. Report results as a short block:
   
   ```
-  Written:   ~/.bifrost/skills/commit-convention/SKILL.md
+  Written:   ~/.ai-library/skills/commit-convention/SKILL.md
   Validated: clean
   Linked:    .claude/skills/, .cursor/rules/
   Pushed:    feat(skills): add commit-convention
