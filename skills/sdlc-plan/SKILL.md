@@ -3,7 +3,7 @@ name: sdlc-plan
 description: Guide the user from a prompt, an existing repo, or an idea to a shared understanding of the work, then to tickets. Defines unknown terms, validates simple requirements with should / should not scenarios, models the system (class, data, services, flows) in Mermaid or Excalidraw, breaks the work down with a WBS, tests the riskiest assumption with a spike, and writes small tickets (GitHub issues or .work/tickets.md). Use at the start of any feature, project, assignment or assessment, after a spike or slice finishes, or when the user asks for a plan or tickets.
 ---
 
-Version: 5.3.0
+Version: 5.4.0
 
 # Plan work
 
@@ -36,6 +36,30 @@ Q1 - <title>: <question, plain words>
   a) <option> (Recommended)
   b) <option>
 ```
+
+## Progress
+
+Start every message of this skill with the progress header:
+
+```
+**sdlc-plan** · Step 3/8: Scope
+✔ Intake › ✔ Terms › **▶ Scope** › Model › WBS › Risks › Validate › Tickets
+Project: 5/8 requirements accepted · 0/6 work packages done
+```
+
+- `✔` = done, `▶` = current, no mark = not started, `⏭` = skipped.
+- The `Project` line shows what is known so far: "not scoped yet" before step 3, then requirements accepted, then work packages done.
+
+When the step changes, show a banner, then the new header:
+
+```
+✔ Step 3 done: Scope. 8 requirements accepted, 1 dropped.
+▶ Step 4: Model. First, the class diagram.
+```
+
+A skipped step gets its own banner with the reason: `⏭ Step 6 skipped: Risks. The top risk is low.`
+
+Also track the 8 steps with the to-do list tool when one exists (`TodoWrite` in Cursor and Claude Code, `update_plan` in Codex). Create them at the start, and update their status at each banner.
 
 ## 1. Intake
 

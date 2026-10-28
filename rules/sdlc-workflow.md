@@ -50,6 +50,8 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 7) ──> sdlc-build ─�
 6. "sdlc-build #N" for each ticket. Review every diff before it is committed.
 7. AI feature? "sdlc-evals" after each change to the prompt, model or tools.
 
+Every `sdlc-plan` and `sdlc-build` message starts with a progress header: the current step, or the ticket bar. A banner marks each step change.
+
 ## In Cursor: plan mode and parallel build
 
 1. Plan mode (Opus): run `sdlc-plan`. The Cursor plan's todos are the spike and the WBS work packages. The todo id is the WBS id.

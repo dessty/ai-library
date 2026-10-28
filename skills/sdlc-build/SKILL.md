@@ -3,7 +3,7 @@ name: sdlc-build
 description: Implement approved tickets (GitHub issues, .work/tickets.md entries, or Cursor plan todos). Test first, implement, run the tests, review the diff, commit, close the ticket, and log any mistake the user catches. Runs one ticket at a time, or as an orchestrator that builds independent tickets in parallel with subagents in git worktrees. Also runs spikes. Use when the user says "next ticket", "build #N", "build the plan", or approves the tickets.
 ---
 
-Version: 5.0.0
+Version: 5.1.0
 
 # Build step
 
@@ -13,6 +13,22 @@ Two modes:
 - Orchestrator: several tickets from a plan, built by subagents. Use it when the user builds a Cursor plan or asks for it.
 
 Read tickets from GitHub (`gh issue view <n>`), `.work/tickets.md`, or the Cursor plan todos.
+
+## Progress
+
+Start every message of this skill with the progress header:
+
+```
+**sdlc-build** · Tickets ███░░░░░ 3/8
+Now: 1.2.1 Check eligibility (Grok 4.7) · Loop step 4/9: run the tests
+```
+
+- The bar has 8 cells, filled in proportion to tickets done.
+- In orchestrator mode, `Now` lists every running ticket with its model.
+
+When a ticket is done, show a banner: `✔ 1.2.1 done: committed a1b2c3d. ▶ Next: 1.3.1 Expiring-soon list.`
+
+Also track the tickets with the to-do list tool when one exists (`TodoWrite` in Cursor and Claude Code, `update_plan` in Codex), or tick the Cursor plan todos.
 
 For a `spike` ticket: run the smallest experiment, respect the time limit, write the answer, then hand back to `sdlc-plan` step 7. Skip steps 2 and 7 unless the spike code is kept.
 

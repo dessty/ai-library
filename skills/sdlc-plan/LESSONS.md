@@ -19,3 +19,4 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 5.1.0 - project summary (goal, context, what gets built, constraints, unclear) shown before any question
 - 5.2.0 - `.work/GLOSSARY.md` sorted alphabetically; new terms inserted in place
 - 5.3.0 - Cursor plan mode output (todo id = WBS id); `After` and `Files` per work package for parallel builds
+- 5.4.0 - progress header on every message, step-change banners, steps tracked in the to-do list tool
