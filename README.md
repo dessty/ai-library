@@ -24,14 +24,33 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 
 | Kind | Name | Use |
 |---|---|---|
+| Skill | `sdlc-plan` | Prompt, repo or idea -> brief, grill, spike, tickets; plans in short cycles |
+| Skill | `sdlc-build` | One ticket: test first, implement, review, commit, close, log mistakes |
+| Skill | `sdlc-evals` | Evaluate an LLM or agent feature and save a receipt |
+| Skill | `commit-work` | Review, split and write clean commits |
 | Skill | `deploy-to-vercel` | Deploy an app to Vercel |
 | Skill | `domain-modeling` | Build a project's glossary (`CONTEXT.md`) and ADRs |
 | Skill | `grill-me` | Stress-test a plan with rounds of questions |
 | Skill | `grill-with-docs` | `grill-me` plus `domain-modeling`, writing docs as it goes |
 | Skill | `vercel-react-best-practices` | React and Next.js performance rules |
+| Rule | `sdlc-workflow` | Plan first, small steps, tests, explicit assumptions |
+| Rule | `answer-style` | How to write answers to me |
+| Rule | `commit-convention` | Commit message format |
+| Rule | `steve-voice` | My written voice |
 | Agent | `heimdall` | Writes and audits skills, then deploys them through Bifrost |
 
-`rules/` is empty for now.
+## Development workflow
+
+`sdlc-plan` (calls `grill-with-docs`) -> `sdlc-build` (spike first, then one ticket at a time) -> `sdlc-plan` again after each spike or slice -> `sdlc-evals` (only for AI features).
+Tickets are GitHub issues, or `.work/tickets.md` in timed rounds. Working files go in `.work/` in the project repo.
+
+## Improving skills
+
+`sdlc-plan`, `sdlc-build` and `sdlc-evals` keep a `LESSONS.md` with lessons and
+a changelog. `sdlc-build` logs agent mistakes in `.work/build-log.md`, and
+`sdlc-evals` logs scores in `.work/receipts.jsonl`. After a project, move lessons
+into the skill that should have prevented them. When a lesson repeats, edit the
+skill and bump its `Version:` line.
 
 ## Setup
 
