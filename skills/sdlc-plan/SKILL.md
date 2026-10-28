@@ -3,7 +3,7 @@ name: sdlc-plan
 description: Guide the user from a prompt, an existing repo, or an idea to a shared understanding of the work, then to tickets. Defines unknown terms, validates simple requirements with should / should not scenarios, models the system (class, data, services, flows) in Mermaid or Excalidraw, breaks the work down with a WBS, tests the riskiest assumption with a spike, and writes small tickets (GitHub issues or .work/tickets.md). Use at the start of any feature, project, assignment or assessment, after a spike or slice finishes, or when the user asks for a plan or tickets.
 ---
 
-Version: 5.0.0
+Version: 5.1.0
 
 # Plan work
 
@@ -12,8 +12,8 @@ The goal is that the user understands the project and how it will be built befor
 Do not write production code in this skill. Working files go in `.work/` at the repo root.
 
 ```
-1 Intake -> 2 Terms -> 3 Scope -> 4 Model -> 5 WBS -> 6 Risks + spike -> 7 Validate -> 8 Tickets
-                                                                              ^_____________|
+1 Intake + summary -> 2 Terms -> 3 Scope -> 4 Model -> 5 WBS -> 6 Risks + spike -> 7 Validate -> 8 Tickets
+                                                                                        ^_____________|
 ```
 
 ## How to ask
@@ -47,7 +47,25 @@ Name the input type and act on it:
 | Existing repo | Read the tree, README, manifests, config and tests. Find the install, run and test commands, and run the tests once. Read `CONTEXT.md`, `.work/GLOSSARY.md` and `docs/adr/` if they exist. |
 | Idea or product doc (PRD) | Read it. Note the user, the problem and the value. No design yet. |
 
-Write the problem in one paragraph of plain words. List the constraints the input states: deadline, time box, required stack, how the work is judged. Show both to the user before step 2.
+### Project summary
+
+Before you ask any question, show a project summary. It proves you understood what the project is about. Write it from the input only, in plain words:
+
+```md
+## Project summary
+- Goal: <what the project must achieve, one sentence>
+- Context: <who it is for, the problem today, why it matters>
+- What gets built: <the product or service, one or two sentences>
+- Constraints: <deadline, time box, required stack, how the work is judged>
+- Unclear: <what the input does not say; these become questions later>
+```
+
+- Keep it under 120 words. No design, no tech choices the input does not state.
+- End with one line: "Tell me if this is wrong. Otherwise I'll start with the terms."
+- If the user corrects it, rewrite it and show it again before step 2.
+- The summary becomes the `Problem` and `Constraints` sections of `.work/BRIEF.md` in step 3.
+
+Only after the summary, start step 2.
 
 ## 2. Terms
 
