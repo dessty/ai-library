@@ -3,7 +3,7 @@ name: sdlc-explain
 description: Explain a prompt, git repo, problem or assignment in simple terms, as if to a junior engineer, one short interactive chunk at a time. Then offer to grill the user on the problem and the approach with grill-me skill. Use before planning, when the user says "explain", "help me understand", or hands over an assignment, repo or idea they do not know yet. Standalone.
 ---
 
-Version: 1.2.0
+Version: 1.3.0
 
 # Explain
 
@@ -27,13 +27,23 @@ Explain one chunk at a time, in this order:
 3. **How will we solve it?** The approach in 3-5 steps. No files, libraries or code.
 4. **How will we know it works?** The result a reviewer can check.
 
+The chunk is the message the user reads. Write it in the chat, as normal text, before any question. Never put it only in your thinking. A question card does not show the chunk, so the chunk must already be on screen above it.
+
+Start every chunk with this heading, as a real heading, not inside a code block:
+
+```md
+## 2 of 4 · What exists today
+```
+
+Use the chunk's own title. A rewrite keeps the same heading and adds `(simpler)` or `(deeper)`.
+
 Rules for each chunk:
 
 - Under 120 words. Short sentences. Literal words. No idioms, no analogies.
 - Define each technical term on first use, in one sentence. Definitions stay in the chat; the glossary file belongs to `sdlc-plan`.
 - Show only what the input says or what you read. Mark guesses as guesses.
 
-After each chunk, ask one check question with the interactive question tool (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code). Without one, ask in text.
+After the heading and the chunk are written, ask one check question with the interactive question tool (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code). Without one, ask in text. The question is only "Is this clear?" The chunk text is not repeated inside the question.
 
 - Options: `Clear (Recommended)`, `Say it simpler`, `Go deeper`.
 - On `Say it simpler` or `Go deeper`, rewrite the chunk and ask again.
@@ -41,7 +51,7 @@ After each chunk, ask one check question with the interactive question tool (`As
 
 ## 3. Offer the grill
 
-After the last chunk, ask: "Do you want me to grill you on this, to check you understood the problem and the approach?" Options: `Yes (Recommended)`, `No`.
+Start with the heading `## Grill`, then ask: "Do you want me to grill you on this, to check you understood the problem and the approach?" Options: `Yes (Recommended)`, `No`.
 
 If yes, load the `grill-me` skill with this scope:
 
@@ -52,7 +62,7 @@ If yes, load the `grill-me` skill with this scope:
 
 ## 4. Save and hand off
 
-When I confirm I understand, write `.work/EXPLAIN.md`, under 250 words:
+Start with the heading `## Saved`, then write `.work/EXPLAIN.md`, under 200 words:
 
 ```md
 # Explain

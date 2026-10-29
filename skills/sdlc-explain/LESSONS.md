@@ -9,3 +9,4 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 ## Changelog
 
 - 1.2.0 - added to the store: chunked explanation with check questions, scoped grill (at most 3 questions per round), `.work/EXPLAIN.md` hand-off to `sdlc-plan`
+- 1.3.0 - each chunk is a visible heading plus text in the chat, written before the question. A question card does not replace the chunk. Grill and Saved have headings too.
