@@ -17,3 +17,5 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 5.0.0 - orchestrator mode: parallel subagents in git worktrees, model by ticket size, cherry-pick after review
 - 5.1.0 - progress header with ticket bar on every message, ticket-done banners
 - 5.1.1 - glossary terms only when `.work/GLOSSARY.md` exists
+- 5.2.0 - no spikes; reads `.work/PLAN.md`; plan changes are proposed by the build, not by re-running `sdlc-plan`
+- 5.3.0 - commit subject built from the ticket: `<label>(<scope>): <title>`. No Cursor plan todos; build order read from `.work/PLAN.md`

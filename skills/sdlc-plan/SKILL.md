@@ -1,71 +1,48 @@
 ---
 name: sdlc-plan
-description: Guide the user from a prompt, an existing repo, or an idea to a shared understanding of the work, then to tickets. Defines unknown terms, validates simple requirements with should / should not scenarios, models the system (class, data, services, flows) in Mermaid or Excalidraw, breaks the work down with a WBS, tests the riskiest assumption with a spike, and writes small tickets (GitHub issues or .work/tickets.md). Use at the start of any feature, project, assignment or assessment, after a spike or slice finishes, or when the user asks for a plan or tickets.
+description: Turn a prompt, an existing repo, or an idea into an executable plan, like a tech spec plus tasks (WBS). Validates simple requirements with should / should not scenarios, models the system in Mermaid or Excalidraw, and writes small tickets for sdlc-build, grouped so independent tickets can be built in parallel by subagents. Use at the start of any feature, project, assignment or assessment, or when the user asks for a plan or tickets.
 ---
 
-Version: 5.5.0
+Version: 6.0.0
 
 # Plan work
 
-The goal is that the user understands the project and how it will be built before any code exists. Guide them one small step at a time. Plan in short cycles: detail only the next 1-2 tickets, and prove the riskiest assumption with a spike before building on it.
+The output is an executable plan: a tech spec (`.work/PLAN.md`), diagrams (`.work/MODEL.md`) and tasks. Each task is one ticket. Tickets are grouped so independent ones can be built in parallel, in an order that gives a working result early. Do not write production code.
 
-Do not write production code in this skill. Working files go in `.work/` at the repo root.
-
-```
-1 Intake + summary -> 2 Terms -> 3 Scope -> 4 Model -> 5 WBS -> 6 Risks + spike -> 7 Validate -> 8 Tickets
-                                                                                        ^_____________|
-```
+Files next to this one: `TECH-SPEC.md` (the `PLAN.md` template) and `TEMPLATES.md` (the other shapes).
 
 ## How to ask
 
-These rules apply to every step.
+- Use the interactive question tool (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code). Without one, number the questions and list the options as `a)`, `b)`.
+- At most 3 questions per round. Recommended option first, marked `(Recommended)`.
+- Group only questions that do not depend on each other. The others wait for a later round.
+- Before a round, say in one sentence what it decides. After it, update the files and say in one line what changed.
+- Find facts yourself: read the repo or docs, or run a command. Never make up an assumption. Ask when unsure.
+- Expand every acronym on first use, unless it is defined in `CONTEXT.md` or `.work/GLOSSARY.md`.
+- Never move to the next step while a question is open.
 
-- Ask with the interactive question tool when one exists: `AskQuestion` in Cursor, `AskUserQuestion` in Claude Code. Without one, use the text format below.
-- At most 3 questions per round. Put the recommended option first and mark it `(Recommended)`.
-- Only group questions that do not depend on each other. A question is ready when every answer it depends on is known. The others wait for a later round.
-- Before each round, say in one sentence what the round decides and why it matters.
-- After each round, write the answers to the files, then show a one-line summary of what changed.
-- Finding facts is your job. Read the repo, the docs, or run a command. Ask the user only for decisions.
-- Expand every acronym on first use in a message, or use only terms already defined in `CONTEXT.md` or `.work/GLOSSARY.md`.
-- Never move to the next step while a question in the current step is open.
+## Step changes
 
-Text format, when there is no question tool:
+Steps: 📥 1. Intake · 🎯 2. Scope · 📊 3. Model · 🗂️ 4. WBS · 🎫 5. Tickets. Use the emoji every time you name a step.
 
-```
-Q1 - <title>: <question, plain words>
-  a) <option> (Recommended)
-  b) <option>
-```
+When the step changes, show this banner as rendered markdown, never inside a code block:
 
-## Progress
+````md
+---
+## ✅ 🎯 Step 2 of 5: Scope (Complete!)
+8 requirements accepted, 1 dropped.
 
-Start every message of this skill with the progress header:
+## ▶️▶️▶️ 📊 Step 3 of 5: Model (in progress...)
+First, the class diagram.
+````
 
-```
-**sdlc-plan** · Step 3/8: Scope
-✔ Intake › ✔ Terms › **▶ Scope** › Model › WBS › Risks › Validate › Tickets
-Project: 5/8 requirements accepted · 0/6 work packages done
-```
+Never skip a step on your own. Ask: "Skip 📊 Step 3: Model? Why: <reason>." Options: `Skip`, `Do it anyway`, recommended first. On `Skip`, show `## ❌ 📊 Step 3 of 5: Model (Skipped)` and the reason.
 
-- `✔` = done, `▶` = current, no mark = not started, `⏭` = skipped.
-- The `Project` line shows what is known so far: "not scoped yet" before step 3, then requirements accepted, then work packages done.
+Track the 5 steps with the to-do list tool when one exists (`TodoWrite`, or `update_plan` in Codex).
 
-When the step changes, show a banner, then the new header:
+## 1. 📥 Intake
 
-```
-✔ Step 3 done: Scope. 8 requirements accepted, 1 dropped.
-▶ Step 4: Model. First, the class diagram.
-```
-
-A skipped step gets its own banner with the reason: `⏭ Step 6 skipped: Risks. The top risk is low.`
-
-Also track the 8 steps with the to-do list tool when one exists (`TodoWrite` in Cursor and Claude Code, `update_plan` in Codex). Create them at the start, and update their status at each banner.
-
-## 1. Intake
-
-If `.work/EXPLAIN.md` exists (written by `sdlc-explain`), read it first. Base the project summary on it, and do not explain again what the user already confirmed there.
-
-Name the input type and act on it:
+If `.work/EXPLAIN.md` exists, read it first. Do not explain again what the user confirmed there.
 
 | Input | First move |
 |---|---|
@@ -73,255 +50,93 @@ Name the input type and act on it:
 | Existing repo | Read the tree, README, manifests, config and tests. Find the install, run and test commands, and run the tests once. Read `CONTEXT.md`, `.work/GLOSSARY.md` and `docs/adr/` if they exist. |
 | Idea or product doc (PRD) | Read it. Note the user, the problem and the value. No design yet. |
 
-### Project summary
+**Project summary.** Before any question, show the project summary (`TEMPLATES.md`), written from the input only.
 
-Before you ask any question, show a project summary. It proves you understood what the project is about. Write it from the input only, in plain words:
+- Under 120 words. No design, no tech choices the input does not state.
+- Put the `Open questions` of `.work/EXPLAIN.md` in `Unclear`.
+- Then ask in one round: "Is this summary right?" (`Yes`, `Change it`), and, if `.work/GLOSSARY.md` does not exist, "Create `.work/GLOSSARY.md` with this project's terms?" (`Yes (Recommended)`, `No`). On `Change it`, rewrite and ask again.
+- In `PLAN.md`, Goal and Context become `Problem`, Constraints become `Constraints`. Unclear items become step 2 questions.
 
-```md
-## Project summary
-- Goal: <what the project must achieve, one sentence>
-- Context: <who it is for, the problem today, why it matters>
-- What gets built: <the product or service, one or two sentences>
-- Constraints: <deadline, time box, required stack, how the work is judged>
-- Unclear: <what the input does not say; these become questions later>
-```
+**Glossary.** If `.work/GLOSSARY.md` exists, update it as new terms appear.
 
-- Keep it under 120 words. No design, no tech choices the input does not state.
-- End with one line: "Tell me if this is wrong. Otherwise I'll start with the terms."
-- If the user corrects it, rewrite it and show it again before step 2.
-- The summary becomes the `Problem` and `Constraints` sections of `.work/BRIEF.md` in step 3.
+- One entry per term (`TEMPLATES.md`): what it is in 1-2 sentences, then one example from this project.
+- Keep entries sorted alphabetically.
+- Business terms specific to this project go in `CONTEXT.md`, in the `domain-modeling` format.
 
-Only after the summary, start step 2.
+## 2. 🎯 Scope
 
-## 2. Terms
-
-Make sure the user knows every word the plan will use.
-
-1. List the jargon, business terms and acronyms in the input. Add the technical terms the plan will need.
-2. Ask one multi-select question: "Which of these terms do you already know?" At most 8 terms per round.
-3. For each unknown term, write a definition: what it is in 1-2 sentences, then one example from this project. Record known terms too, in one line.
-4. Show the definitions of the unknown terms in the chat.
-5. Business terms specific to this project go in `CONTEXT.md`, in the `domain-modeling` format. Other terms (technical, industry, acronyms) go in `.work/GLOSSARY.md`.
-6. The glossary file is optional. If `.work/GLOSSARY.md` does not exist, ask before creating it: "Save these definitions in `.work/GLOSSARY.md`?" Options: `Yes (Recommended)`, `No, keep them in the chat`. If it exists, update it without asking.
-
-`.work/GLOSSARY.md` format:
-
-```md
-# Glossary
-
-**ADK** (Agent Development Kit): Google's framework for building AI agents. In this project: runs the drill agent.
-
-**SSE** (Server-Sent Events): A way for a server to push a stream of messages to a browser over one HTTP connection. In this project: the agent streams its answer token by token.
-
-Known terms: Vitest (test runner). Zod (runtime schema validation).
-```
-
-- Sort entries alphabetically by term, ignoring case (`LCSW`, `Log redaction`, `LPC`).
-- Keep the `Known terms:` line last, also sorted.
-
-New terms that appear in later steps are inserted at their alphabetical place, never appended at the end.
-
-## 3. Scope
-
-Turn the input into simple requirements, and validate each one with the user.
-
-Requirement format:
-
-```md
-### R1: <who> can <do what>
-- Source: explicit / implied (why)
-- Should: <user or app> should be able to <...>
-- Should not: <user or app> should not be able to <...>
-- Status: proposed / accepted
-```
+Turn the input into simple requirements (`TEMPLATES.md`), and validate each one.
 
 - One requirement is one behavior. Split anything with "and".
-- Give 1-2 "should" and at least 1 "should not" scenario. Scenarios use concrete values from the project ("a psychiatrist with a DEA registration that expired yesterday").
-- Mark sensitive data (PHI, PII, secrets) as a requirement when present.
+- 1-2 "should" and at least 1 "should not" scenario, with concrete values from the project.
+- Sensitive data (PHI, PII, secrets) is a requirement when present.
 
 Rounds:
 
-1. Requirements: up to 3 per round, one question each, with options Accept / Edit / Drop. On Edit, ask what to change, then show the new version.
-2. Decisions: open questions that change the design. Highest impact first, up to 3 per round, each with a recommended option.
-3. Assumptions: anything you would otherwise assume silently. Ask them now, before the brief is final.
-4. Out of scope: one question listing what you propose to leave out.
+1. Requirements: up to 3 per round, options Accept / Edit / Drop. On Edit, ask what to change, then show the new version.
+2. Decisions that change the design, highest impact first. The chosen option goes in `Decisions`, the others in `Alternatives considered`.
+3. Assumptions and non-goals, in one round: the assumptions you would otherwise make silently, and one question listing what you propose to leave out.
 
-Write `.work/BRIEF.md`:
+Write `.work/PLAN.md` from `TECH-SPEC.md`.
 
-```md
-# Brief
+- If a section does not apply, write `Not needed: <why>`. Never invent content to fill it.
+- Draft `Dependencies & risks` yourself. Ask only about points that change the design.
 
-## Input
-<prompt / repo / idea / PRD>
+The step is done when every requirement is accepted or dropped.
 
-## Problem
-<one paragraph, plain words>
+## 3. 📊 Model
 
-## Constraints
-- <deadline, time box, required stack, how the work is judged>
-
-## Repo (if any)
-- Stack:
-- Commands: install / run / test
-- Gaps:
-
-## Requirements
-<R1, R2, ... in the format above>
-
-## Decisions
-- D1: <decision> (why)
-
-## Assumptions
-- A1: <assumption> - confirmed / not confirmed
-
-## Success criteria
-- <result a reviewer can check>
-
-## Out of scope
--
-```
-
-The step is done when every requirement is accepted or dropped, and the user confirms a 3-5 sentence summary of the scope.
-
-## 4. Model
-
-Show the user how the system is shaped. Write `.work/MODEL.md`. Draw only the diagrams that apply, and say which ones you skipped and why.
+Write `.work/MODEL.md`. Draw only the diagrams that apply, and say which ones you skipped and why.
 
 | Diagram | Mermaid type | When |
 |---|---|---|
 | Class diagram: domain entities, fields, relations | `classDiagram` | Always |
-| Data model: tables, keys, relations | `erDiagram` | The project stores data |
-| Services: components, external systems, databases | `flowchart` | More than one component, or an external API |
-| Main flow: who calls whom, in order | `sequenceDiagram` | For the riskiest or most important flow |
+| Data model (ER diagram, MCD): tables, keys, relations | `erDiagram` | The project stores data |
+| Component diagram: system parts, external services, databases, and their links | `flowchart` | More than one component, or an external API |
+| Sequence diagram: who calls whom, in order, for one flow | `sequenceDiagram` | For the 1-3 most important flows |
 
-- Use the names from `CONTEXT.md`.
-- Keep each diagram under about 10 boxes. Split a larger one.
-- Show one diagram at a time. Under it, explain in 3-5 plain sentences what the boxes and arrows mean. Then ask: Accept / Change.
-- Mermaid in `.work/MODEL.md` is the source of truth, because it lives in the repo and diffs.
-- If an Excalidraw MCP is available, offer an Excalidraw version of the accepted diagrams. Add the scene link under the Mermaid block. Never replace the Mermaid.
-- A decision that is hard to reverse (a database choice, an append-only history) becomes an ADR through the `domain-modeling` skill.
+- One `##` heading per diagram, named after its type: `## Class diagram`, `## Data model (Entity/Relation diagram)`, `## Component diagram`, `## Sequence diagram: <flow name>`.
+- Link each diagram from `### Model` in `PLAN.md`: `[Sequence diagram: Check eligibility](MODEL.md#sequence-diagram-check-eligibility)`.
+- Use the names from `CONTEXT.md`. Keep each diagram under about 10 boxes.
+- Show all diagrams in one message. Under each, 3-5 plain non-technical sentences on what the boxes and arrows mean. Then ask one question: Accept all / Change one (which).
+- Mermaid is the source of truth. If an Excalidraw MCP is available, add the offer of an Excalidraw version to the same question.
+- Fill `### APIs` in `PLAN.md` when the system exposes endpoints.
+- A design choice made while modeling goes in `### Decisions`, and the options not chosen in `Alternatives considered`.
 
-## 5. WBS
+## 4. 🗂️ WBS
 
-A WBS (work breakdown structure) is a tree that splits the project into deliverables, then into work packages. Each work package becomes one ticket.
+A WBS (work breakdown structure) splits the project into features (level 2), then into tasks (level 3). Write it in `Implementation plan` of `PLAN.md`, in the `TEMPLATES.md` format: tree, levels legend, `After` / `Files` table, build order.
 
-Add to `.work/BRIEF.md`:
+- `After`: tasks that must be done first. `Files`: code files or folders the task changes. Tasks in the same batch run in parallel, so neither is after the other and their `Files` do not overlap.
+- Put shared groundwork (scaffold, schema, shared types) in one early `chore` task under the first feature. Keep `After` links few and `Files` apart.
+- A feature is something the user or the app gets, never a layer ("Database", "API"). Its `scope` is one short lower-case word, used as the commit scope.
+- A task is one ticket of size XS, S or M. It works end to end and can be tested. Only the groundwork task may skip end to end.
+- Every requirement maps to at least one task. Every task maps to a requirement, or is a `chore`.
 
-```md
-## WBS
+Naming. Labels become ticket titles and commit messages, so a junior developer or a non-technical person must understand them:
 
-1 <project>
-├── 1.1 <capability>                      R1, R2
-│   ├── 1.1.1 <work package> (S)
-│   └── 1.1.2 <work package> (M)
-└── 1.2 <capability>                      R3
-    └── 1.2.1 <work package> (S)
+- Feature: what a user or the app can do. "Check if a provider can see patients", not "Eligibility engine".
+- Task: a verb and the visible result, at most 50 characters. "Show credentials that expire in 60 days", not "Expiry query + cron".
+- No jargon, no undefined acronyms, no file, library or function names. Read each line aloud: if an outsider would not understand it, rename it.
 
-| WBS | After | Files |
-|---|---|---|
-| 1.1.1 | S0 | src/db/*, src/providers/* |
-| 1.1.2 | 1.1.1 | src/providers/* |
-| 1.2.1 | S0 | src/eligibility/* |
-```
+Show the tree and the build order, and ask: Accept / Change.
 
-- `After` lists the packages that must be done first. `Files` lists the folders or files the package will touch. Two packages can be built in parallel only when neither is after the other and their `Files` do not overlap.
-- Level 2 is a capability the user or the app gets ("Check eligibility"), never a layer ("Database", "API"). Layers produce horizontal tickets that cannot be tested end to end.
-- Level 3 is a vertical slice of size XS, S or M. Split anything larger.
-- The children of a node cover all of its scope, and nothing outside it.
-- Every requirement maps to at least one work package. Every work package maps to a requirement, or is a `chore`.
-- Show the tree and ask: Accept / Change.
+## 5. 🎫 Tickets
 
-## 6. Risks and spike
+Write the tickets to `.work/tickets.md` (`TEMPLATES.md`):
 
-Add to `BRIEF.md`:
-
-```md
-## Riskiest assumptions
-1. <assumption> - if wrong: <consequence>
-```
-
-Keep 1-3. Rank by "most likely wrong" times "most expensive if wrong".
-
-A spike is a small, time-limited task that answers one question. The output is an answer, not a feature. Create one spike ticket for the top risk:
-
-```md
-### [spike] <question as a yes/no question>
-- Time limit: <fit the constraints>
-- Test: <the smallest experiment that answers it>
-- Done when: <the answer is written down>
-- Code: throwaway / keep
-```
-
-Run it with `sdlc-build`. If the top risk is low, say so and skip to step 8.
-
-## 7. Validate
-
-After a spike or a slice, append to `.work/BRIEF.md`:
-
-```md
-## Validation <n> - <spike or ticket title>
-- Answer:
-- Learned:
-- Decision: keep / change / drop
-- Plan change:
-```
-
-If the answer changes a requirement, a diagram or the WBS, update the file and tell the user what changed.
-
-## 8. Tickets
-
-Create:
-
-- One tracking ticket: the goal, the success criteria, and the WBS tree as a checklist that links to each ticket.
-- Detailed tickets for the next 1-2 work packages only.
-- Title-only tickets for the rest, named `<WBS id> <title>`.
-
-Detailed ticket format:
-
-```md
-### [feat] <WBS id> <title>
-- WBS: 1.1.1
-- Covers: R1, R2
-- Goal: <one sentence>
-- Scenarios:
-  - Should: <from the requirement>
-  - Should not: <from the requirement>
-- Acceptance criteria:
-  - [ ] <checkable result>
-- Tests: <one per scenario, plus edge cases>
-- Model: <the part of .work/MODEL.md this ticket builds or changes>
-- Size: XS / S / M
-- After: <WBS ids, or none>
-- Files: <folders or files it touches>
-- Agent does: <what the agent implements>
-- I check: <what I review by hand, and why>
-```
-
-Labels: `spike`, `feat`, `test`, `chore`.
-
-Where tickets go:
-
-- GitHub issues with `gh issue create` when the repo has a GitHub remote and `gh auth status` succeeds.
-- Otherwise, or when the user asks: `.work/tickets.md`, same format.
-
-Rules:
-
-- Derive values that can go stale (status, eligibility) instead of storing them, unless a ticket says why.
-- If a slice has an LLM or agent feature, list its behaviors under `AI evals` in the ticket for `sdlc-evals`. Each "should not" scenario is a candidate refusal case.
-
-## Cursor plan mode
-
-When this skill runs in Cursor plan mode, also write the Cursor plan. The `.work/` files stay the source of truth, because other tools cannot read a Cursor plan.
-
-- Start the plan body with: "Build with the `sdlc-build` skill, orchestrator mode."
-- Body: the project summary, the requirements (id and one line each), the WBS tree and table, the detailed tickets, and links to the `.work/` files.
-- Todos: one per spike and per level 3 work package, in WBS order. The todo id is the WBS id (`s0`, `1.1.1`). Content: `[feat] 1.1.1 <title> - R1, R2 - S - after s0`.
-- If plan mode cannot write the `.work/` files, put their full content in the plan body, and make the first todo `0 Write the .work/ files from this plan and commit them`.
-- The `.work/` files and the base code must be committed before the build starts. Build agents work in git worktrees, and a worktree starts from the last commit.
-- The user picks the models: the plan model in the chat picker, the build model in the picker next to Build.
+- One tracking ticket: the goals, a link to `PLAN.md`, and a checklist of all tickets, grouped by batch.
+- One ticket per task. The title is the task label only; the WBS id stays in the `WBS` field.
+- Labels: `feat` (user-visible behavior), `chore` (groundwork, config), `test` (tests only).
+- `sdlc-build` turns each ticket into its commit message: `<label>(<scope>): <title in lower case>`.
+- Derive values that can go stale (status, eligibility). Do not store them.
+- Fill `Testing & monitoring` in `PLAN.md`: the tests from the ticket scenarios, or `Not needed: <why>`.
+- For an LLM or agent feature, fill `AI evals` for `sdlc-evals`. Each "should not" scenario is a candidate refusal case.
 
 ## Stop
 
-Show the WBS tree and the detailed tickets. Do not start building until the user says "approved".
+Show the tickets. Do not start building until the user says "approved". Then:
 
-After each spike or slice, run this skill again from step 7.
+1. Set `status: approved` and `updated` in the `PLAN.md` header.
+2. If the repo has a GitHub remote and `gh auth status` succeeds, create the GitHub issues from `.work/tickets.md`. Create missing labels first with `gh label create`.
+3. Say: "Commit `.work/`, then run `sdlc-build`."
