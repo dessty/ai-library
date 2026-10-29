@@ -3,7 +3,7 @@ name: sdlc-build
 description: Implement approved tickets (GitHub issues, .work/tickets.md entries, or Cursor plan todos). Test first, implement, run the tests, review the diff, commit, close the ticket, and log any mistake the user catches. Runs one ticket at a time, or as an orchestrator that builds independent tickets in parallel with subagents in git worktrees. Also runs spikes. Use when the user says "next ticket", "build #N", "build the plan", or approves the tickets.
 ---
 
-Version: 5.1.0
+Version: 5.1.1
 
 # Build step
 
@@ -44,7 +44,7 @@ For a `spike` ticket: run the smallest experiment, respect the time limit, write
 8. Check every acceptance criterion. Close the ticket (`gh issue close <n>`) or tick it in `.work/tickets.md`.
 9. Say what the next ticket is. If the work changed what comes next, run `sdlc-plan` from step 7.
 
-If the code differs from `.work/MODEL.md` (a new field, table or call), update the diagram in the same commit and say so. Add any new term to `CONTEXT.md` or `.work/GLOSSARY.md`, at its alphabetical place in the glossary.
+If the code differs from `.work/MODEL.md` (a new field, table or call), update the diagram in the same commit and say so. Add any new term to `CONTEXT.md`, or to `.work/GLOSSARY.md` at its alphabetical place when that file exists.
 
 ## Orchestrator mode
 

@@ -16,3 +16,4 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 4.2.0 - new glossary terms inserted alphabetically
 - 5.0.0 - orchestrator mode: parallel subagents in git worktrees, model by ticket size, cherry-pick after review
 - 5.1.0 - progress header with ticket bar on every message, ticket-done banners
+- 5.1.1 - glossary terms only when `.work/GLOSSARY.md` exists

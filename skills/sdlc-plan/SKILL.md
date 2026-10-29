@@ -3,7 +3,7 @@ name: sdlc-plan
 description: Guide the user from a prompt, an existing repo, or an idea to a shared understanding of the work, then to tickets. Defines unknown terms, validates simple requirements with should / should not scenarios, models the system (class, data, services, flows) in Mermaid or Excalidraw, breaks the work down with a WBS, tests the riskiest assumption with a spike, and writes small tickets (GitHub issues or .work/tickets.md). Use at the start of any feature, project, assignment or assessment, after a spike or slice finishes, or when the user asks for a plan or tickets.
 ---
 
-Version: 5.4.0
+Version: 5.5.0
 
 # Plan work
 
@@ -63,6 +63,8 @@ Also track the 8 steps with the to-do list tool when one exists (`TodoWrite` in 
 
 ## 1. Intake
 
+If `.work/EXPLAIN.md` exists (written by `sdlc-explain`), read it first. Base the project summary on it, and do not explain again what the user already confirmed there.
+
 Name the input type and act on it:
 
 | Input | First move |
@@ -98,8 +100,9 @@ Make sure the user knows every word the plan will use.
 1. List the jargon, business terms and acronyms in the input. Add the technical terms the plan will need.
 2. Ask one multi-select question: "Which of these terms do you already know?" At most 8 terms per round.
 3. For each unknown term, write a definition: what it is in 1-2 sentences, then one example from this project. Record known terms too, in one line.
-4. Business terms specific to this project go in `CONTEXT.md`, in the `domain-modeling` format. Other terms (technical, industry, acronyms) go in `.work/GLOSSARY.md`.
-5. Show the definitions of the unknown terms in the chat.
+4. Show the definitions of the unknown terms in the chat.
+5. Business terms specific to this project go in `CONTEXT.md`, in the `domain-modeling` format. Other terms (technical, industry, acronyms) go in `.work/GLOSSARY.md`.
+6. The glossary file is optional. If `.work/GLOSSARY.md` does not exist, ask before creating it: "Save these definitions in `.work/GLOSSARY.md`?" Options: `Yes (Recommended)`, `No, keep them in the chat`. If it exists, update it without asking.
 
 `.work/GLOSSARY.md` format:
 
