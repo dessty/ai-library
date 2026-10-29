@@ -1,4 +1,4 @@
-<!-- bifrost:begin scope=project hash=e17f4a0777a1 -->
+<!-- bifrost:begin scope=project hash=a2698f1d81b2 -->
 <!-- bifrost:rule name=answer-style scope=global -->
 # How to write to me
 
@@ -53,18 +53,19 @@ Apply to any task bigger than a one-line fix.
 ## The flow
 
 ```
-sdlc-plan ──> sdlc-build ──> sdlc-plan (step 7) ──> sdlc-build ──> ... ──> sdlc-evals
- terms         spike          validate              next ticket            AI features only
- scope         first          update tickets
- model, WBS
- tickets
+sdlc-explain ··> sdlc-plan ──> sdlc-build ──> sdlc-plan (step 7) ──> sdlc-build ──> ... ──> sdlc-evals
+ optional         terms         spike          validate              next ticket            AI features only
+ problem          scope         first          update tickets
+ approach         model, WBS
+ grill            tickets
 ```
 
 ## The pieces
 
 | Piece | When | Output |
 |---|---|---|
-| `sdlc-plan` | Start of any work, and after each spike or slice | `.work/BRIEF.md`, `.work/GLOSSARY.md`, `.work/MODEL.md`, tickets |
+| `sdlc-explain` | Optional, before planning, when I don't know the problem yet | `.work/EXPLAIN.md` |
+| `sdlc-plan` | Start of any work, and after each spike or slice | `.work/BRIEF.md`, `.work/GLOSSARY.md` (optional), `.work/MODEL.md`, tickets |
 | `domain-modeling` | Called by `sdlc-plan` | `CONTEXT.md` (domain glossary), `docs/adr/` (decisions) |
 | `sdlc-build` | One ticket at a time | tests, code, one commit per ticket, `.work/build-log.md` |
 | `commit-work` | Called by `sdlc-build` | clean commits |
@@ -72,7 +73,7 @@ sdlc-plan ──> sdlc-build ──> sdlc-plan (step 7) ──> sdlc-build ─�
 
 ## How to use it
 
-1. Start: "sdlc-plan" plus a prompt, a repo, or an idea.
+1. Start: "sdlc-explain" if I don't know the problem yet, then "sdlc-plan" plus a prompt, a repo, or an idea.
 2. Answer the rounds of questions (at most 3 at a time): terms I don't know, requirements, decisions.
 3. Review the diagrams, the WBS, the spike ticket and the first tickets. Say "approved".
 4. "sdlc-build" the spike. Read the answer.
@@ -102,8 +103,9 @@ Every `sdlc-plan` and `sdlc-build` message starts with a progress header: the cu
 
 ```
 .work/
+├── EXPLAIN.md       problem, today, approach, done when (from sdlc-explain)
 ├── BRIEF.md         problem, constraints, requirements, WBS, risks, validation decisions
-├── GLOSSARY.md      technical and industry terms, acronyms
+├── GLOSSARY.md      technical and industry terms, acronyms (optional)
 ├── MODEL.md         class, data, service and flow diagrams (Mermaid)
 ├── tickets.md       only when not using GitHub issues
 ├── build-log.md     mistakes the agent made and how I caught them
