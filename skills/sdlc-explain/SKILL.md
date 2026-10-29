@@ -3,7 +3,7 @@ name: sdlc-explain
 description: Explain a prompt, git repo, problem or assignment in simple terms, as if to a junior engineer, one short interactive chunk at a time. Then offer to grill the user on the problem and the approach with grill-me skill. Use before planning, when the user says "explain", "help me understand", or hands over an assignment, repo or idea they do not know yet. Standalone.
 ---
 
-Version: 1.3.0
+Version: 1.4.0
 
 # Explain
 
@@ -27,7 +27,7 @@ Explain one chunk at a time, in this order:
 3. **How will we solve it?** The approach in 3-5 steps. No files, libraries or code.
 4. **How will we know it works?** The result a reviewer can check.
 
-The chunk is the message the user reads. Write it in the chat, as normal text, before any question. Never put it only in your thinking. A question card does not show the chunk, so the chunk must already be on screen above it.
+The chunk is the message the user reads. A Thought panel is not the message. Cursor collapses it, so text that exists only there is invisible.
 
 Start every chunk with this heading, as a real heading, not inside a code block:
 
@@ -43,7 +43,12 @@ Rules for each chunk:
 - Define each technical term on first use, in one sentence. Definitions stay in the chat; the glossary file belongs to `sdlc-plan`.
 - Show only what the input says or what you read. Mark guesses as guesses.
 
-After the heading and the chunk are written, ask one check question with the interactive question tool (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code). Without one, ask in text. The question is only "Is this clear?" The chunk text is not repeated inside the question.
+Then ask one check question with the interactive question tool (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code). Without one, ask in text. Options stay `Clear (Recommended)`, `Say it simpler`, `Go deeper`.
+
+Where the chunk goes depends on the model, because Cursor hides Claude's text when a tool is called in the same turn:
+
+- Claude (Sonnet, Opus): the question prompt is the heading, the full chunk, a blank line, then "Is this clear?". This is the text the user sees. Do not put the chunk in your thinking.
+- Any other model, including Grok: write the heading and the chunk as normal chat text first. The question prompt is only "Is this clear?". Do not repeat the chunk in the prompt.
 
 - Options: `Clear (Recommended)`, `Say it simpler`, `Go deeper`.
 - On `Say it simpler` or `Go deeper`, rewrite the chunk and ask again.
