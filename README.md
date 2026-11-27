@@ -23,7 +23,7 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 
 | Name | Use | Kind |
 |---|---|---|
-| <td colspan="3">SDLC-* workflow</td> | | |
+| | SDLC-* workflow | |
 | [`sdlc-explain`](skills/sdlc-explain/SKILL.md) | Explain a prompt, repo or problem in plain words, one chunk at a time, then an optional grill | Skill |
 | [`sdlc-plan`](skills/sdlc-plan/SKILL.md) | Prompt, repo or idea -> tech-spec plan: scenarios, diagrams, WBS, tickets; guided rounds | Skill |
 | [`sdlc-build`](skills/sdlc-build/SKILL.md) | One ticket: test first, implement, review, commit, close, log mistakes | Skill |
@@ -36,6 +36,7 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 | [`grill-me`](skills/grill-me/SKILL.md) | Stress-test a plan with rounds of questions | Skill |
 | [`grill-with-docs`](skills/grill-with-docs/SKILL.md) | `grill-me` plus `domain-modeling`, writing docs as it goes | Skill |
 | [`vercel-react-best-practices`](skills/vercel-react-best-practices/SKILL.md) | React and Next.js performance rules | Skill |
+| [`mastering-typescript`](skills/mastering-typescript/SKILL.md) | TypeScript and React patterns for type-safe apps | Skill |
 | [`sdlc-workflow`](rules/sdlc-workflow.md) | Plan first, small steps, tests, explicit assumptions | Rule |
 | [`answer-style`](rules/answer-style.md) | How to write answers to me | Rule |
 | [`commit-convention`](rules/commit-convention.md) | Commit message format | Rule |

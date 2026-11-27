@@ -53,7 +53,7 @@ Apply to any task bigger than a one-line fix.
 ## The flow
 
 ```
-sdlc-explain ··> sdlc-plan ──> sdlc-build ──> sdlc-build ──> ... ──> sdlc-evals
+sdlc-explain ··> sdlc-plan ──> sdlc-build ──> sdlc-build ──> ... ──> sdlc-evals ──> sdlc-retro
  optional         scope         ticket 1       ticket 2              AI features only
  problem          model
  approach         WBS
@@ -70,6 +70,8 @@ sdlc-explain ··> sdlc-plan ──> sdlc-build ──> sdlc-build ──> ... �
 | `sdlc-build` | One ticket at a time | tests, code, one commit per ticket, `.work/build-log.md` |
 | `commit-work` | Called by `sdlc-build` | clean commits |
 | `sdlc-evals` | Only when the work has an LLM or agent feature | scorecard, `.work/receipts.jsonl` |
+| `sdlc-retro` | After a project is complete | lessons for the other SDLC skills |
+| `mastering-typescript` | TypeScript or React work. Not an SDLC step | type-safe patterns for the app |
 
 ## How to use it
 
@@ -119,7 +121,9 @@ CONTEXT.md           domain glossary
 
 ## Changing the workflow
 
-All files live in `~/.ai-library`. Bifrost deploys them to Claude Code, Cursor and Codex.
+All files live in `~/.ai-library`. Bifrost is a command line tool. It deploys AI skills from this library into Claude Code, Cursor, and Codex.
+
+Install Bifrost. Then use Bifrost to deploy the library:
 
 ```bash
 cd ~/.ai-library
@@ -127,6 +131,12 @@ bifrost validate
 bifrost link --apply
 bifrost doctor --fix   # after renaming or deleting a skill
 ```
+
+The store layout is `skills/<name>/SKILL.md`, `rules/*.md`, and `agents/<name>.yaml`. Notes for an agent live in `agents/<name>/` and are not deployed.
+
+The README contents table columns are Name, Use, Kind. The SDLC skills sit together under the `SDLC-* workflow` row. A dash row separates that group from the other skills. `python3 scripts/check-docs.py` checks that table against the skill folders, the rules, and the agent yaml files.
+
+`TODO.md` says to iterate on that script, then add a pre-commit hook that runs it. The hook is not added yet.
 
 <!-- bifrost:rule name=steve-voice scope=global -->
 # Steve — Voice & Tone Rule
