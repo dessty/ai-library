@@ -23,12 +23,13 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 
 | Kind | Name | Use |
 |---|---|---|
-SDLC-* workflow
+| SDLC-* workflow | | |
 | Skill | `sdlc-explain` | Explain a prompt, repo or problem in plain words, one chunk at a time, then an optional grill |
 | Skill | `sdlc-plan` | Prompt, repo or idea -> tech-spec plan: scenarios, diagrams, WBS, tickets; guided rounds |
 | Skill | `sdlc-build` | One ticket: test first, implement, review, commit, close, log mistakes |
 | Skill | `sdlc-evals` | Evaluate an LLM or agent feature and save a receipt |
 | Skill | `sdlc-retro` | After a project, review the work and record lessons for the other SDLC skills |
+| --- | --- | --- |
 | Skill | `commit-work` | Review, split and write clean commits |
 | Skill | `deploy-to-vercel` | Deploy an app to Vercel |
 | Skill | `domain-modeling` | Build a project's glossary (`CONTEXT.md`) and ADRs |
