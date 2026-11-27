@@ -23,7 +23,7 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 
 | Name | Use | Kind |
 |---|---|---|
-| | | SDLC-* workflow |
+| <td colspan="3">SDLC-* workflow</td> | | |
 | [`sdlc-explain`](skills/sdlc-explain/SKILL.md) | Explain a prompt, repo or problem in plain words, one chunk at a time, then an optional grill | Skill |
 | [`sdlc-plan`](skills/sdlc-plan/SKILL.md) | Prompt, repo or idea -> tech-spec plan: scenarios, diagrams, WBS, tickets; guided rounds | Skill |
 | [`sdlc-build`](skills/sdlc-build/SKILL.md) | One ticket: test first, implement, review, commit, close, log mistakes | Skill |
