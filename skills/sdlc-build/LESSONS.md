@@ -6,6 +6,9 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 
 ## Lessons
 
+- async-pdf-processing, 2026-11-27: finished work was left only in the working tree. Prevent with: a commit at a safe checkpoint.
+- async-pdf-processing, 2026-11-27: the next ticket started before the merged code was rebuilt and tested. Prevent with: rebuild and run the tests after each merge, before the next ticket.
+
 ## Changelog
 
 - 1.0.0 - first version
@@ -19,3 +22,4 @@ When the same lesson appears twice, change the skill, bump its `Version:` line, 
 - 5.1.1 - glossary terms only when `.work/GLOSSARY.md` exists
 - 5.2.0 - no spikes; reads `.work/PLAN.md`; plan changes are proposed by the build, not by re-running `sdlc-plan`
 - 5.3.0 - commit subject built from the ticket: `<label>(<scope>): <title>`. No Cursor plan todos; build order read from `.work/PLAN.md`
+- 5.4.0 - commit at a safe checkpoint so finished work is not left only in the working tree; rebuild and run the tests after each merge, before the next ticket

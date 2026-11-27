@@ -3,7 +3,7 @@ name: sdlc-explain
 description: Explain a prompt, git repo, problem or assignment in simple terms, as if to a junior engineer, one short interactive chunk at a time. Then offer to grill the user on the problem and the approach with grill-me skill. Use before planning, when the user says "explain", "help me understand", or hands over an assignment, repo or idea they do not know yet. Standalone.
 ---
 
-Version: 1.4.0
+Version: 1.5.0
 
 # Explain
 
@@ -79,6 +79,10 @@ Start with the heading `## Saved`, then write `.work/EXPLAIN.md`, under 200 word
 ```
 
 Say: "Next: `sdlc-plan`." `sdlc-plan` reads this file when it exists.
+
+## Watchdog
+
+A watchdog is a time limit that restarts or reports a stopped agent. If you start a background agent, such as one that writes docs, set one. When the agent shows no progress past the limit, restart it, or tell the user it stopped. Do not wait for it silently. Example: a docs agent stopped at 12:03 AM on 2026-11-27 and nobody restarted it.
 
 ## Stop
 

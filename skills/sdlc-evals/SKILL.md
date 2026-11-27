@@ -3,7 +3,7 @@ name: sdlc-evals
 description: Evaluate an LLM or agent feature against a fixed set of cases, print a scorecard, and save a receipt. Checks answers, tool calls, refusals and data leaks. Use when the user asks to run evals, test an AI feature, or check whether a prompt or model change helped. Not for normal unit tests.
 ---
 
-Version: 3.1.0
+Version: 3.2.0
 
 # Run evals
 
@@ -58,3 +58,4 @@ Append one JSON line to `.work/receipts.jsonl`:
 
 - Never edit a case or a grader to raise the score.
 - Change one thing between runs (prompt, model, or tool), so the receipt shows what helped.
+- A headed browser run (a real browser window, not headless) is a gate on every ticket that changes the UI. A gate is a check that must pass before the next ticket starts. Do not defer it to the end.

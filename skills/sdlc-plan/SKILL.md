@@ -3,7 +3,7 @@ name: sdlc-plan
 description: Turn a prompt, an existing repo, or an idea into an executable plan, like a tech spec plus tasks (WBS). Validates simple requirements with should / should not scenarios, models the system in Mermaid or Excalidraw, and writes small tickets for sdlc-build, grouped so independent tickets can be built in parallel by subagents. Use at the start of any feature, project, assignment or assessment, or when the user asks for a plan or tickets.
 ---
 
-Version: 6.0.0
+Version: 6.1.0
 
 # Plan work
 
@@ -81,6 +81,7 @@ Write `.work/PLAN.md` from `TECH-SPEC.md`.
 
 - If a section does not apply, write `Not needed: <why>`. Never invent content to fill it.
 - Draft `Dependencies & risks` yourself. Ask only about points that change the design.
+- Check dependencies before any code: run or read each one. Look for a package missing from the production image (`httpx` was) and an API a ticket needs but lacks (a list endpoint with no `offset`).
 
 The step is done when every requirement is accepted or dropped.
 
@@ -109,6 +110,10 @@ A WBS (work breakdown structure) splits the project into features (level 2), the
 
 - `After`: tasks that must be done first. `Files`: code files or folders the task changes. Tasks in the same batch run in parallel, so neither is after the other and their `Files` do not overlap.
 - Put shared groundwork (scaffold, schema, shared types) in one early `chore` task under the first feature. Keep `After` links few and `Files` apart.
+- Default to parallel. Tickets with disjoint `Files` share a batch. A sequential-only batch with no `Files` overlap is a plan smell: split it or say why.
+- Draw the dependency graph (a `flowchart` of the `After` links) in `PLAN.md` before the build order, so the parallel split is visible.
+- Write two clocks. Agent execution time is time the model works. Wall-clock time is calendar time, waits included. A build cap, such as 2 hours, is agent execution time.
+- Plan no idle time. Pre-approve sandbox access, start each worker at once, and put no manual gate between safe commits. Those waits are idle time.
 - A feature is something the user or the app gets, never a layer ("Database", "API"). Its `scope` is one short lower-case word, used as the commit scope.
 - A task is one ticket of size XS, S or M. It works end to end and can be tested. Only the groundwork task may skip end to end.
 - Every requirement maps to at least one task. Every task maps to a requirement, or is a `chore`.

@@ -3,7 +3,7 @@ name: sdlc-build
 description: Implement approved tickets (GitHub issues or .work/tickets.md entries). Test first, implement, run the tests, review the diff, commit, close the ticket, and log any mistake the user catches. Runs one ticket at a time, or as an orchestrator that builds independent tickets in parallel with subagents in git worktrees. Use when the user says "next ticket", "build #N", "build the plan", or approves the tickets.
 ---
 
-Version: 5.3.0
+Version: 5.4.0
 
 # Build step
 
@@ -52,7 +52,7 @@ You plan, dispatch, review and merge. Subagents write the code.
 2. Pick the ready tickets: every `After` is done, and their `Files` do not overlap. At most 3 at a time.
 3. Start one `best-of-n-runner` subagent per ticket, in parallel. Model by size: XS or S `grok-4.7-medium`, M `claude-sonnet-5-5-high`.
 4. Show each result to the user: ticket, test output, diff summary, and the `I check` items. Wait for their review. For corrections, resume the same subagent.
-5. After approval, `git cherry-pick` each commit onto the current branch, in WBS order. Run the full test suite in the main checkout and show the output. On a conflict, stop and show it.
+5. After approval, `git cherry-pick` each commit onto the current branch, in WBS order. Rebuild, then run the full test suite in the main checkout and show the output. Do not start the next ticket until it passes. On a conflict, stop and show it.
 6. Tick the todo or close the ticket. Log mistakes in `.work/build-log.md`. Remove the worktree with `git worktree remove <path>`.
 7. Say which tickets are ready next. If the work changed the plan, stop and propose the change to `.work/PLAN.md` and the affected tickets.
 
@@ -80,6 +80,8 @@ When the user corrects you, or a test catches a wrong implementation, append to 
 - Never weaken or delete a test to make it pass. If a test is wrong, say why and ask.
 - Never change a ticket silently. If it is wrong, stop and propose the change.
 - If a ticket grows past size M, stop and split it.
+- Commit at a safe checkpoint: tests pass and the diff is reviewed. Finished work must never sit only in the working tree.
+- After each merge, rebuild and run the tests before the next ticket. In single mode, the loop's commit and test steps do this.
 
 ## After the last ticket
 
