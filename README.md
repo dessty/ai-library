@@ -2,8 +2,7 @@
 
 My skills, rules, and agents for AI tools, kept in one place.
 
-Each item lives here once. [Bifrost](https://github.com/dessty/bifrost-cli)
-deploys it into Claude Code, Cursor, and Codex, so no tool keeps its own copy.
+Each item lives here once. Install [Bifrost](https://github.com/dessty/bifrost-cli), then use Bifrost to deploy the library into Claude Code, Cursor, and Codex, so no tool keeps its own copy.
 
 ## Layout
 
@@ -24,10 +23,12 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 
 | Kind | Name | Use |
 |---|---|---|
+SDLC-* workflow
 | Skill | `sdlc-explain` | Explain a prompt, repo or problem in plain words, one chunk at a time, then an optional grill |
 | Skill | `sdlc-plan` | Prompt, repo or idea -> tech-spec plan: scenarios, diagrams, WBS, tickets; guided rounds |
 | Skill | `sdlc-build` | One ticket: test first, implement, review, commit, close, log mistakes |
 | Skill | `sdlc-evals` | Evaluate an LLM or agent feature and save a receipt |
+| Skill | `sdlc-retro` | After a project, review the work and record lessons for the other SDLC skills |
 | Skill | `commit-work` | Review, split and write clean commits |
 | Skill | `deploy-to-vercel` | Deploy an app to Vercel |
 | Skill | `domain-modeling` | Build a project's glossary (`CONTEXT.md`) and ADRs |
@@ -53,15 +54,18 @@ a changelog. `sdlc-build` logs agent mistakes in `.work/build-log.md`, and
 into the skill that should have prevented them. When a lesson repeats, edit the
 skill and bump its `Version:` line.
 
-## Setup
+## Bifrost
+
+Bifrost is a command line tool. It deploys AI skills from the AI library into Claude Code, Cursor, and Codex.
+
+Install Bifrost. Then use Bifrost to deploy the library:
 
 ```bash
 bifrost init --repo https://github.com/dessty/ai-library.git
 bifrost link --apply
 ```
 
-`init` clones this repo into `~/.ai-library`. Set `BIFROST_HOME` to use a
-different folder. `link --apply` creates the links in each tool.
+`init` clones this repo into `~/.ai-library`. Set `BIFROST_HOME` to use a different folder. `link --apply` creates the links in Claude Code, Cursor, and Codex.
 
 ## Making a change
 
