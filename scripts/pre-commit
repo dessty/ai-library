@@ -1,0 +1,5 @@
+#!/bin/sh
+# Block the commit when the README contents table does not match the files on disk.
+root=$(git rev-parse --show-toplevel) || exit 1
+cd "$root" || exit 1
+exec python3 scripts/check-docs.py
