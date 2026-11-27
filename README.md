@@ -24,23 +24,23 @@ Bifrost only deploys agent files that sit directly in `agents/`.
 | Kind | Name | Use |
 |---|---|---|
 | SDLC-* workflow | | |
-| Skill | `sdlc-explain` | Explain a prompt, repo or problem in plain words, one chunk at a time, then an optional grill |
-| Skill | `sdlc-plan` | Prompt, repo or idea -> tech-spec plan: scenarios, diagrams, WBS, tickets; guided rounds |
-| Skill | `sdlc-build` | One ticket: test first, implement, review, commit, close, log mistakes |
-| Skill | `sdlc-evals` | Evaluate an LLM or agent feature and save a receipt |
-| Skill | `sdlc-retro` | After a project, review the work and record lessons for the other SDLC skills |
+| Skill | [`sdlc-explain`](skills/sdlc-explain/SKILL.md) | Explain a prompt, repo or problem in plain words, one chunk at a time, then an optional grill |
+| Skill | [`sdlc-plan`](skills/sdlc-plan/SKILL.md) | Prompt, repo or idea -> tech-spec plan: scenarios, diagrams, WBS, tickets; guided rounds |
+| Skill | [`sdlc-build`](skills/sdlc-build/SKILL.md) | One ticket: test first, implement, review, commit, close, log mistakes |
+| Skill | [`sdlc-evals`](skills/sdlc-evals/SKILL.md) | Evaluate an LLM or agent feature and save a receipt |
+| Skill | [`sdlc-retro`](skills/sdlc-retro/SKILL.md) | After a project, review the work and record lessons for the other SDLC skills |
 | --- | --- | --- |
-| Skill | `commit-work` | Review, split and write clean commits |
-| Skill | `deploy-to-vercel` | Deploy an app to Vercel |
-| Skill | `domain-modeling` | Build a project's glossary (`CONTEXT.md`) and ADRs |
-| Skill | `grill-me` | Stress-test a plan with rounds of questions |
-| Skill | `grill-with-docs` | `grill-me` plus `domain-modeling`, writing docs as it goes |
-| Skill | `vercel-react-best-practices` | React and Next.js performance rules |
-| Rule | `sdlc-workflow` | Plan first, small steps, tests, explicit assumptions |
-| Rule | `answer-style` | How to write answers to me |
-| Rule | `commit-convention` | Commit message format |
-| Rule | `steve-voice` | My written voice |
-| Agent | `heimdall` | Writes and audits skills, then deploys them through Bifrost |
+| Skill | [`commit-work`](skills/commit-work/SKILL.md) | Review, split and write clean commits |
+| Skill | [`deploy-to-vercel`](skills/deploy-to-vercel/SKILL.md) | Deploy an app to Vercel |
+| Skill | [`domain-modeling`](skills/domain-modeling/SKILL.md) | Build a project's glossary (`CONTEXT.md`) and ADRs |
+| Skill | [`grill-me`](skills/grill-me/SKILL.md) | Stress-test a plan with rounds of questions |
+| Skill | [`grill-with-docs`](skills/grill-with-docs/SKILL.md) | `grill-me` plus `domain-modeling`, writing docs as it goes |
+| Skill | [`vercel-react-best-practices`](skills/vercel-react-best-practices/SKILL.md) | React and Next.js performance rules |
+| Rule | [`sdlc-workflow`](rules/sdlc-workflow.md) | Plan first, small steps, tests, explicit assumptions |
+| Rule | [`answer-style`](rules/answer-style.md) | How to write answers to me |
+| Rule | [`commit-convention`](rules/commit-convention.md) | Commit message format |
+| Rule | [`steve-voice`](rules/steve-voice.md) | My written voice |
+| Agent | [`heimdall`](agents/heimdall.yaml) | Writes and audits skills, then deploys them through Bifrost |
 
 ## Development workflow
 
